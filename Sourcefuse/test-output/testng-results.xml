@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="67394" started-at="2020-01-08T17:49:09Z" finished-at="2020-01-08T17:50:17Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="67394" started-at="2020-01-08T17:49:09Z" finished-at="2020-01-08T17:50:17Z">
+      <class name="test.AutomationFormTest">
+        <test-method status="PASS" signature="initialize()[pri:0, instance:test.AutomationFormTest@3abbfa04]" name="initialize" is-config="true" duration-ms="22442" started-at="2020-01-08T17:49:09Z" finished-at="2020-01-08T17:49:32Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initialize -->
+        <test-method status="PASS" signature="TestCase1()[pri:0, instance:test.AutomationFormTest@3abbfa04]" name="TestCase1" duration-ms="5304" started-at="2020-01-08T17:49:32Z" description="Try to submit without filling required fields and &quot;Labels&quot; of all the required field printed on Console." finished-at="2020-01-08T17:49:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TestCase1 -->
+        <test-method status="PASS" signature="TestCase2()[pri:1, instance:test.AutomationFormTest@3abbfa04]" name="TestCase2" duration-ms="2885" started-at="2020-01-08T17:49:37Z" description="Verify all input fields using Soft assertions." finished-at="2020-01-08T17:49:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TestCase2 -->
+        <test-method status="PASS" signature="TestCase3()[pri:2, instance:test.AutomationFormTest@3abbfa04]" name="TestCase3" duration-ms="2565" started-at="2020-01-08T17:49:40Z" description="Verify all input fields using Hard assertions." finished-at="2020-01-08T17:49:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TestCase3 -->
+        <test-method status="PASS" signature="TestCase4()[pri:3, instance:test.AutomationFormTest@3abbfa04]" name="TestCase4" duration-ms="34163" started-at="2020-01-08T17:49:42Z" description="Submit the form after filling all details properly by using XPath only. " finished-at="2020-01-08T17:50:17Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TestCase4 -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.AutomationFormTest@3abbfa04]" name="tearDown" is-config="true" duration-ms="0" started-at="2020-01-08T17:50:17Z" finished-at="2020-01-08T17:50:17Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- test.AutomationFormTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
