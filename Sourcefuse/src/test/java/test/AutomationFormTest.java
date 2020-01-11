@@ -13,6 +13,7 @@ import utilities.ExcelUtil;
 
 public class AutomationFormTest extends BaseTest {
 	ArrayList<String> formFieldValues;
+	String PrimaryKey;
 
 	@Test(priority = 0, description = "Try to submit without filling required fields and \"Labels\" of all the required field printed on Console.")
 	public void TestCase1() {
@@ -188,14 +189,14 @@ public class AutomationFormTest extends BaseTest {
 	public void TestCase4(Map<String, String> map) {
 		automationForm.fillCompleteForm(map);
 		formFieldValues = automationForm.getAllFieldValues();
+		PrimaryKey = automationForm.getEmail().getAttribute("value");
 		automationForm.getAllFieldValues().clear();
 		automationForm.clickSubmitButton();
 	}
 
 	@Test(priority = 4, dependsOnMethods = "TestCase4", description = "Verify DB entry after submitting the form using JDBC connection.")
 	public void TestCase5() throws SQLException {
-		ArrayList<String> dbEnteredValues = DatabaseConnector.executeSQLQuery_List("select * from automationForm");
-		Assert.assertTrue(formFieldValues.equals(dbEnteredValues),
-				"Entered form value is correctly entered in database");
+		ArrayList<String> dbEnteredValues = DatabaseConnector.executeSQLQuery_List("select * from automationForm where email='"+PrimaryKey+"'");
+		Assert.assertTrue(formFieldValues.equals(dbEnteredValues),"Entered form value is correctly entered in database");
 	}
 }
