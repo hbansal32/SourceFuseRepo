@@ -28,7 +28,7 @@ public class DatabaseConnector extends BasePage {
 		try {
 			connection = DriverManager.getConnection(databaseURL, dbusername, dbpassword);
 			if (connection != null) {
-				System.out.println("Connected to the database...");
+				
 			} else {
 				System.out.println("Database connection failed.");
 			}
@@ -67,7 +67,7 @@ public class DatabaseConnector extends BasePage {
 		try {
 			connection = DriverManager.getConnection(databaseURL, dbusername, dbpassword);
 			if (connection != null) {
-				System.out.println("Connected to the database");
+				
 			} else {
 				System.out.println("Failed to connect to database");
 			}

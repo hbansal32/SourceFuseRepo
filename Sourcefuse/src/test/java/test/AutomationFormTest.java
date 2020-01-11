@@ -197,6 +197,13 @@ public class AutomationFormTest extends BaseTest {
 	@Test(priority = 4, dependsOnMethods = "TestCase4", description = "Verify DB entry after submitting the form using JDBC connection.")
 	public void TestCase5() throws SQLException {
 		ArrayList<String> dbEnteredValues = DatabaseConnector.executeSQLQuery_List("select * from automationForm where email='"+PrimaryKey+"'");
+		dbEnteredValues.remove("email=false");
 		Assert.assertTrue(formFieldValues.equals(dbEnteredValues),"Entered form value is correctly entered in database");
+	}
+	
+	@Test(priority = 5, dependsOnMethods ="TestCase4", description = "Verify E-mail is triggered or not after submitting the form using assertion on DB considering an email trigger column as email_sent.")
+	public void TestCase6() throws SQLException {
+		String emailValidation = DatabaseConnector.executeSQLQuery("select email_sent from automationForm where email='"+PrimaryKey+"'");
+		Assert.assertTrue(emailValidation.contains("false"),"Email triggered after submitting the form.");
 	}
 }
