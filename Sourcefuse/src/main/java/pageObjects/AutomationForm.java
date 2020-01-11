@@ -1,7 +1,9 @@
 package pageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -16,8 +18,9 @@ public class AutomationForm extends BasePage {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
-	JavascriptExecutor js = (JavascriptExecutor)driver;
-	
+
+	JavascriptExecutor js = (JavascriptExecutor) driver;
+
 	@FindBy(xpath = "//div[@id='fnameInput']/input")
 	private WebElement fname;
 
@@ -54,32 +57,26 @@ public class AutomationForm extends BasePage {
 	@FindBy(xpath = "//input[@id='resume']")
 	private WebElement resume;
 
-	@FindBy(xpath = "//input[@class='form-check-input' and @id='yes']")
-	private WebElement relocateYes;
-	
-	@FindBy(xpath = "//input[@class='form-check-input' and @id='no']")
-	private WebElement relocateNo;
-	
-	@FindBy(xpath = "//input[@class='form-check-input' and @id='notSure']")
-	private WebElement relocateNotSure;
-	
+	@FindBy(xpath = "//input[@type='radio']")
+	private List<WebElement> relocateOptions;
+
 	@FindBy(xpath = "//button[@type='submit']")
 	private WebElement submit;
-	
+
 	@FindBy(xpath = "//button[@type='reset']")
 	private WebElement reset;
-	
+
 	@FindBy(xpath = "//label")
 	private List<WebElement> labels;
-	
-	public WebElement getFname() {		
+
+	public WebElement getFname() {
 		return fname;
 	}
 
 	public WebElement setFname(String firstName) {
 		fname.clear();
 		fname.sendKeys(firstName);
-		return this.fname ;
+		return this.fname;
 	}
 
 	public WebElement getLname() {
@@ -181,67 +178,93 @@ public class AutomationForm extends BasePage {
 		address.sendKeys(s);
 		return this.address;
 	}
-	
+
 	public WebElement getResume() {
 		return resume;
 	}
-	
-	public void uploadResume(){
+
+	public void uploadResume() {
 		resume.click();
 		try {
-			Thread.sleep(3000);		
-			Runtime.getRuntime().exec(projectPath+"//src//main//java//resources//fileUploadAutoItScript.exe");
+			Thread.sleep(3000);
+			Runtime.getRuntime().exec(projectPath + "//src//main//java//resources//fileUploadAutoItScript.exe");
 		} catch (IOException | InterruptedException e) {
 		}
 	}
-	public WebElement getRelocateYes() {
-		return relocateYes;
+
+	public WebElement getRelocateSelectedOption() {
+		WebElement selectedOption = null;
+		for (WebElement option : relocateOptions) {
+			if (option.isSelected()) {
+				selectedOption = option;
+			}
+		}
+		return selectedOption;		
+	}
+	
+	public WebElement getRelocateElement() {
+		return relocateOptions.get(0);		
 	}
 
 	public void selectRelocateOption(String s) {
-		if(s.equals("yes"))
-				relocateYes.click();
-		if(s.equals("no"))
-			relocateNo.click();
-		if(s.equals("notSure"))
-			relocateNotSure.click();
+		for (WebElement option : relocateOptions) {
+			if (option.getAttribute("id").equals(s))
+				option.click();
+		}
 	}
-	
+
 	public void clickSubmitButton() {
 		submit.click();
 	}
-	
+
 	public void clickResetButton() {
 		reset.click();
 	}
-	
+
 	public void printLabels() {
-		for(WebElement label : labels)
-			System.out.println(label.getText());		
+		for (WebElement label : labels)
+			System.out.println(label.getText());
 	}
-	
-	public void fillCompleteForm() {
+
+	public ArrayList<String> getAllFieldValues() {
+		ArrayList<String> getAllFields = new ArrayList<String>();
+		getAllFields.add(getFname().getAttribute("value"));
+		getAllFields.add(getLname().getAttribute("value"));
+		getAllFields.add(getEmail().getAttribute("value"));
+		getAllFields.add(getCurCompany().getAttribute("value"));
+		getAllFields.add(getMobile().getAttribute("value"));
+		getAllFields.add(getDOB().getAttribute("value"));
+		getAllFields.add(getPosition().getAttribute("value"));
+		getAllFields.add(getPortfolio().getAttribute("value"));
+		getAllFields.add(getSalary().getAttribute("value"));
+		getAllFields.add(getWhenStart().getAttribute("value"));
+		getAllFields.add(getAddress().getAttribute("value"));
+		getAllFields.add(getRelocateSelectedOption().getAttribute("id"));
+		return getAllFields;
+	}
+
+	public void fillCompleteForm(Map<String, String> map) {
 		clickResetButton();
-		setFname("Himanshu");
-		setLname("Bansal");
-		setEmail("him.20may@gmail.com");
-		setCurCompany("Cognizant Technology Solution");
-		setMobile("8447064950");
-		setDOB("05/20/1991");
-		setPosition("Senior Quality Engineer");
-		setPortfolio("https://www.linkedin.com/in/hbansal32/");
-		setSalary("636000");
-		setWhenStart("20 Jan 2020");
-		setAddress("Wagholi, Pune");
+		setFname(map.get("fname"));
+		setLname(map.get("lname"));
+		setEmail(map.get("email"));
+		setCurCompany(map.get("curCompany"));
+		setMobile(map.get("mobile"));
+		setDOB(map.get("dob"));
+		setPosition(map.get("position"));
+		setPortfolio(map.get("portfolio"));
+		setSalary(map.get("salary"));
+		setWhenStart(map.get("whenStart"));
+		setAddress(map.get("address"));
 		uploadResume();
-		selectRelocateOption("yes");
+		selectRelocateOption(map.get("relocate"));
 	}
-	
+
 	public String getFieldErrorMessage(WebElement element) {
 		return element.getAttribute("validationMessage");
 	}
-	
+
 	public boolean verifyEnteredValue(WebElement element) {
-		return (Boolean)((JavascriptExecutor)driver).executeScript("return arguments[0].checkValidity();", element);
-	}	
+		return (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();", element);
+	}
 }

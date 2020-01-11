@@ -20,7 +20,7 @@ public class ExcelUtil extends BasePage {
 
 	@DataProvider
 	public Object[][] getData() throws IOException {
-		File file = new File(projectPath + "\\src\\test\\java\\resources\\LoginTestData.xlsx");
+		File file = new File(projectPath + "\\src\\test\\java\\resources\\AutomationFormTestData.xlsx");
 
 		FileInputStream fis = new FileInputStream(file);
 

@@ -3,9 +3,6 @@ package pageObjects;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
@@ -24,9 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class BasePage {
 	public static WebDriver driver;
 	public static Properties prop;
-	static Connection con;
-	public static Statement stmt;
-
+	
 	public static String projectPath = System.getProperty("user.dir");
 	
 	public WebDriver initializeDriver() throws IOException {
@@ -56,21 +51,6 @@ public class BasePage {
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}
-
-	public void setupDatabase() throws Exception {
-		String db_url = prop.getProperty("db_url");
-		String db_user = prop.getProperty("db_user");
-		String db_password = prop.getProperty("db_password");
-
-		try {
-			//String dbClass = "com.mysql.cj.jdbc.Driver";
-			// Class.forName(dbClass).newInstance();
-			Connection con = DriverManager.getConnection(db_url, db_user, db_password);
-			stmt = con.createStatement();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public String getScreenshotPath(String result) throws IOException {

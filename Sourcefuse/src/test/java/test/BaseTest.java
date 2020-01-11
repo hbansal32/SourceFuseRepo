@@ -1,5 +1,10 @@
 package test;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
@@ -11,15 +16,21 @@ public class BaseTest extends BasePage {
 
 	@BeforeTest
 	public void initialize() throws Exception {
-		driver = initializeDriver();
+		initializeDriver();
 		automationForm = new AutomationForm(driver);
-		launchApplication();
+		launchApplication();		
 	}
 
 	@AfterTest
 	public void tearDown() {
-		driver.navigate().to(projectPath+"/target/surefire-reports/ExtentReportsTestNG.html");
-		//driver.quit();
+		driver.quit();
 		driver = null;
+	}
+	
+	@AfterSuite
+	public void generateReport() throws IOException, InterruptedException {
+		Thread.sleep(10000);
+		File htmlFile = new File(projectPath+"/target/surefire-reports/ExtentReportsTestNG.html");
+		Desktop.getDesktop().browse(htmlFile.toURI());		
 	}
 }

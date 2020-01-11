@@ -1,36 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+<testng-results skipped="0" failed="0" ignored="0" total="5" passed="5">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="67394" started-at="2020-01-08T17:49:09Z" finished-at="2020-01-08T17:50:17Z">
+  <suite name="Default suite" duration-ms="33495" started-at="2020-01-11T10:44:40Z" finished-at="2020-01-11T10:45:14Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="67394" started-at="2020-01-08T17:49:09Z" finished-at="2020-01-08T17:50:17Z">
+    <test name="Default test" duration-ms="33495" started-at="2020-01-11T10:44:40Z" finished-at="2020-01-11T10:45:14Z">
       <class name="test.AutomationFormTest">
-        <test-method status="PASS" signature="initialize()[pri:0, instance:test.AutomationFormTest@3abbfa04]" name="initialize" is-config="true" duration-ms="22442" started-at="2020-01-08T17:49:09Z" finished-at="2020-01-08T17:49:32Z">
+        <test-method status="PASS" signature="initialize()[pri:0, instance:test.AutomationFormTest@31ef45e3]" name="initialize" is-config="true" duration-ms="17308" started-at="2020-01-11T10:44:40Z" finished-at="2020-01-11T10:44:58Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initialize -->
-        <test-method status="PASS" signature="TestCase1()[pri:0, instance:test.AutomationFormTest@3abbfa04]" name="TestCase1" duration-ms="5304" started-at="2020-01-08T17:49:32Z" description="Try to submit without filling required fields and &quot;Labels&quot; of all the required field printed on Console." finished-at="2020-01-08T17:49:37Z">
+        <test-method status="PASS" signature="TestCase1()[pri:0, instance:test.AutomationFormTest@31ef45e3]" name="TestCase1" duration-ms="487" started-at="2020-01-11T10:44:58Z" description="Try to submit without filling required fields and &quot;Labels&quot; of all the required field printed on Console." finished-at="2020-01-11T10:44:58Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TestCase1 -->
-        <test-method status="PASS" signature="TestCase2()[pri:1, instance:test.AutomationFormTest@3abbfa04]" name="TestCase2" duration-ms="2885" started-at="2020-01-08T17:49:37Z" description="Verify all input fields using Soft assertions." finished-at="2020-01-08T17:49:40Z">
+        <test-method status="PASS" signature="TestCase2(java.util.Map)[pri:1, instance:test.AutomationFormTest@31ef45e3]" name="TestCase2" duration-ms="5553" started-at="2020-01-11T10:44:59Z" description="Verify all input fields using Soft assertions." data-provider="getData" finished-at="2020-01-11T10:45:05Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[{wrongMobile3=78945, fname=Himanshu, wrongPortfolio=url, address=Wagholi, Pune, wrongMobile1=wrongMobile, wrongMobile2=123456789, mobile=8447064950, salary=636000, curCompany=Cognizant Technology Solution, lname=Bansal, whenStart=20-Jan-20, relocate=yes, portfolio=https://www.linkedin.com/in/hbansal32/, dob=05/20/1991, position=Senior Quality Engineer, wrongEmail1=abc, wrongEmail2=abc@, email=him.20may@gmail.com}]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TestCase2 -->
-        <test-method status="PASS" signature="TestCase3()[pri:2, instance:test.AutomationFormTest@3abbfa04]" name="TestCase3" duration-ms="2565" started-at="2020-01-08T17:49:40Z" description="Verify all input fields using Hard assertions." finished-at="2020-01-08T17:49:42Z">
+        <test-method status="PASS" signature="TestCase3(java.util.Map)[pri:2, instance:test.AutomationFormTest@31ef45e3]" name="TestCase3" duration-ms="2528" started-at="2020-01-11T10:45:05Z" description="Verify all input fields using Hard assertions." data-provider="getData" finished-at="2020-01-11T10:45:07Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[{wrongMobile3=78945, fname=Himanshu, wrongPortfolio=url, address=Wagholi, Pune, wrongMobile1=wrongMobile, wrongMobile2=123456789, mobile=8447064950, salary=636000, curCompany=Cognizant Technology Solution, lname=Bansal, whenStart=20-Jan-20, relocate=yes, portfolio=https://www.linkedin.com/in/hbansal32/, dob=05/20/1991, position=Senior Quality Engineer, wrongEmail1=abc, wrongEmail2=abc@, email=him.20may@gmail.com}]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TestCase3 -->
-        <test-method status="PASS" signature="TestCase4()[pri:3, instance:test.AutomationFormTest@3abbfa04]" name="TestCase4" duration-ms="34163" started-at="2020-01-08T17:49:42Z" description="Submit the form after filling all details properly by using XPath only. " finished-at="2020-01-08T17:50:17Z">
+        <test-method status="PASS" signature="TestCase4(java.util.Map)[pri:3, instance:test.AutomationFormTest@31ef45e3]" name="TestCase4" duration-ms="5603" started-at="2020-01-11T10:45:07Z" description="Submit the form after filling all details properly by using XPath only. " data-provider="getData" finished-at="2020-01-11T10:45:13Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[{wrongMobile3=78945, fname=Himanshu, wrongPortfolio=url, address=Wagholi, Pune, wrongMobile1=wrongMobile, wrongMobile2=123456789, mobile=8447064950, salary=636000, curCompany=Cognizant Technology Solution, lname=Bansal, whenStart=20-Jan-20, relocate=yes, portfolio=https://www.linkedin.com/in/hbansal32/, dob=05/20/1991, position=Senior Quality Engineer, wrongEmail1=abc, wrongEmail2=abc@, email=him.20may@gmail.com}]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TestCase4 -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.AutomationFormTest@3abbfa04]" name="tearDown" is-config="true" duration-ms="0" started-at="2020-01-08T17:50:17Z" finished-at="2020-01-08T17:50:17Z">
+        <test-method status="PASS" signature="TestCase5()[pri:4, instance:test.AutomationFormTest@31ef45e3]" name="TestCase5" duration-ms="297" started-at="2020-01-11T10:45:13Z" description="Verify DB entry after submitting the form using JDBC connection." depends-on-methods="test.AutomationFormTest.TestCase4" finished-at="2020-01-11T10:45:13Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TestCase5 -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.AutomationFormTest@31ef45e3]" name="tearDown" is-config="true" duration-ms="691" started-at="2020-01-11T10:45:13Z" finished-at="2020-01-11T10:45:14Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
+        <test-method status="PASS" signature="generateReport()[pri:0, instance:test.AutomationFormTest@31ef45e3]" name="generateReport" is-config="true" duration-ms="10816" started-at="2020-01-11T10:45:14Z" finished-at="2020-01-11T10:45:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- generateReport -->
       </class> <!-- test.AutomationFormTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

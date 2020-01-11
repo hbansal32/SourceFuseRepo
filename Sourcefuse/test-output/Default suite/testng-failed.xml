@@ -6,8 +6,10 @@
       <class name="test.AutomationFormTest">
         <methods>
           <include name="tearDown"/>
+          <include name="TestCase5"/>
           <include name="initialize"/>
-          <include name="TestCase2"/>
+          <include name="generateReport"/>
+          <include name="TestCase4"/>
         </methods>
       </class> <!-- test.AutomationFormTest -->
     </classes>

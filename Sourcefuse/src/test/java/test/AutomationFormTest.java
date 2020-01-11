@@ -1,155 +1,201 @@
 package test;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AutomationFormTest extends BaseTest {
+import utilities.DatabaseConnector;
+import utilities.ExcelUtil;
 
-	@Test(priority=0, description= "Try to submit without filling required fields and \"Labels\" of all the required field printed on Console.")
+public class AutomationFormTest extends BaseTest {
+	ArrayList<String> formFieldValues;
+
+	@Test(priority = 0, description = "Try to submit without filling required fields and \"Labels\" of all the required field printed on Console.")
 	public void TestCase1() {
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getFname()), "Please fill out this field.");
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getFname()),
+				"Please fill out this field.");
 		automationForm.printLabels();
 	}
-	
-	@Test(priority=1, description= "Verify all input fields using Soft assertions.")
-	public void TestCase2() {
+
+	@Test(priority = 1, description = "Verify all input fields using Soft assertions.", dataProvider = "getData", dataProviderClass = ExcelUtil.class)
+	public void TestCase2(Map<String, String> map) {
 		SoftAssert Assert = new SoftAssert();
 		automationForm.clickResetButton();
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getFname()), "Please fill out this field.");
-		automationForm.setFname("fname1");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getFname()),
+				"Please fill out this field.");
+		automationForm.setFname(map.get("fname"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getLname()), "Please fill out this field.");
-		automationForm.setLname("lname1");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getLname()),
+				"Please fill out this field.");
+		automationForm.setLname(map.get("lname"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getEmail()), "Please fill out this field.");
-		automationForm.setEmail("abc");
-		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail()).contains("Please include an '@' in the email address."), "Please include an '@' in the email address.");
-		automationForm.setEmail("abc@");
-		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail()).contains("Please enter a part following '@'."), "Please enter a part following '@'.");
-		automationForm.setEmail("abc@xyz.com");
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getEmail()),
+				"Please fill out this field.");
+		automationForm.setEmail(map.get("wrongEmail1"));
+		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail()).contains(
+				"Please include an '@' in the email address."), "Please include an '@' in the email address.");
+		automationForm.setEmail(map.get("wrongEmail2"));
+		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail())
+				.contains("Please enter a part following '@'."), "Please enter a part following '@'.");
+		automationForm.setEmail(map.get("email"));
 		Assert.assertTrue(automationForm.verifyEnteredValue(automationForm.getEmail()), "Entered value is valid");
-		
-		
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getCurCompany()), "Please fill out this field.");
-		automationForm.setCurCompany("company");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getCurCompany()),
+				"Please fill out this field.");
+		automationForm.setCurCompany(map.get("curCompany"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please fill out this field.");
-		automationForm.setMobile("company");
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please match the requested format.");
-		automationForm.setMobile("123456789");
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please match the requested format.");
-		automationForm.setMobile("78945");
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please match the requested format.");
-		automationForm.setMobile("8974561234");
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please fill out this field.");
+		automationForm.setMobile(map.get("wrongMobile1"));
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please match the requested format.");
+		automationForm.setMobile(map.get("wrongMobile2"));
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please match the requested format.");
+		automationForm.setMobile(map.get("wrongMobile3"));
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please match the requested format.");
+		automationForm.setMobile(map.get("mobile"));
 		Assert.assertTrue(automationForm.verifyEnteredValue(automationForm.getMobile()), "Entered value is valid");
-		
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getDOB()), "Please fill out this field.");
-		automationForm.setDOB("05/20/1991");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getDOB()),
+				"Please fill out this field.");
+		automationForm.setDOB(map.get("dob"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPosition()), "Please fill out this field.");
-		automationForm.setPosition("tester");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPosition()),
+				"Please fill out this field.");
+		automationForm.setPosition(map.get("position"));
+
 		automationForm.clickSubmitButton();
 		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPortfolio()), "Please enter a URL.");
-		automationForm.setPortfolio("url");
+		automationForm.setPortfolio(map.get("wrongPortfolio"));
 		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPortfolio()), "Please enter a URL.");
-		automationForm.setPortfolio("http://url");
+		automationForm.setPortfolio(map.get("portfolio"));
 		Assert.assertTrue(automationForm.verifyEnteredValue(automationForm.getPortfolio()), "Entered value is valid");
-		
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getSalary()), "Please fill out this field.");
-		automationForm.setSalary("12");
-		
-		//Bug: Resume upload section is not marked as mandatory field.
-		//automationForm.clickSubmitButton();
-		//Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getResume()), "Please select a file.");
-		//automationForm.uploadResume();
-				
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getSalary()),
+				"Please fill out this field.");
+		automationForm.setSalary(map.get("salary"));
+
+		// Bug: Resume upload section is not marked as mandatory field.
+		// automationForm.clickSubmitButton();
+		// Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getResume()),
+		// "Please select a file.");
+		// automationForm.uploadResume();
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getRelocateYes()), "Please select one of these options.");
-		automationForm.selectRelocateOption("yes");
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getRelocateElement()),
+				"Please select one of these options.");
+		automationForm.selectRelocateOption(map.get("relocate"));
 		automationForm.clickSubmitButton();
 		Assert.assertAll();
-		}
-	
-	@Test(priority=2, description= "Verify all input fields using Hard assertions.")
-	public void TestCase3() {
+	}
+
+	@Test(priority = 2, description = "Verify all input fields using Hard assertions.", dataProvider = "getData", dataProviderClass = ExcelUtil.class)
+	public void TestCase3(Map<String, String> map) {
 		automationForm.clickResetButton();
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getFname()), "Please fill out this field.");
-		automationForm.setFname("fname1");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getFname()),
+				"Please fill out this field.");
+		automationForm.setFname(map.get("fname"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getLname()), "Please fill out this field.");
-		automationForm.setLname("lname1");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getLname()),
+				"Please fill out this field.");
+		automationForm.setLname(map.get("lname"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getEmail()), "Please fill out this field.");
-		automationForm.setEmail("abc");
-		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail()).contains("Please include an '@' in the email address."), "Please include an '@' in the email address.");
-		automationForm.setEmail("abc@");
-		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail()).contains("Please enter a part following '@'."), "Please enter a part following '@'.");
-		automationForm.setEmail("abc@xyz.com");
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getEmail()),
+				"Please fill out this field.");
+		automationForm.setEmail(map.get("wrongEmail1"));
+		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail()).contains(
+				"Please include an '@' in the email address."), "Please include an '@' in the email address.");
+		automationForm.setEmail(map.get("wrongEmail2"));
+		Assert.assertTrue(automationForm.getFieldErrorMessage(automationForm.getEmail())
+				.contains("Please enter a part following '@'."), "Please enter a part following '@'.");
+		automationForm.setEmail(map.get("email"));
 		Assert.assertTrue(automationForm.verifyEnteredValue(automationForm.getEmail()), "Entered value is valid");
-		
-		
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getCurCompany()), "Please fill out this field.");
-		automationForm.setCurCompany("company");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getCurCompany()),
+				"Please fill out this field.");
+		automationForm.setCurCompany(map.get("curCompany"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please fill out this field.");
-		automationForm.setMobile("company");
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please match the requested format.");
-		automationForm.setMobile("123456789");
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please match the requested format.");
-		automationForm.setMobile("78945");
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()), "Please match the requested format.");
-		automationForm.setMobile("8974561234");
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please fill out this field.");
+		automationForm.setMobile(map.get("wrongMobile1"));
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please match the requested format.");
+		automationForm.setMobile(map.get("wrongMobile2"));
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please match the requested format.");
+		automationForm.setMobile(map.get("wrongMobile3"));
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getMobile()),
+				"Please match the requested format.");
+		automationForm.setMobile(map.get("mobile"));
 		Assert.assertTrue(automationForm.verifyEnteredValue(automationForm.getMobile()), "Entered value is valid");
-		
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getDOB()), "Please fill out this field.");
-		automationForm.setDOB("05/20/1991");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getDOB()),
+				"Please fill out this field.");
+		automationForm.setDOB(map.get("dob"));
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPosition()), "Please fill out this field.");
-		automationForm.setPosition("tester");
-		
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPosition()),
+				"Please fill out this field.");
+		automationForm.setPosition(map.get("position"));
+
 		automationForm.clickSubmitButton();
 		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPortfolio()), "Please enter a URL.");
-		automationForm.setPortfolio("url");
+		automationForm.setPortfolio(map.get("wrongPortfolio"));
 		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getPortfolio()), "Please enter a URL.");
-		automationForm.setPortfolio("http://url");
+		automationForm.setPortfolio(map.get("portfolio"));
 		Assert.assertTrue(automationForm.verifyEnteredValue(automationForm.getPortfolio()), "Entered value is valid");
-		
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getSalary()), "Please fill out this field.");
-		automationForm.setSalary("12");
-		
-		//Bug: Resume upload section is not marked as mandatory field.
-		//automationForm.clickSubmitButton();
-		//Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getResume()), "Please select a file.");
-		//automationForm.uploadResume();
-				
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getSalary()),
+				"Please fill out this field.");
+		automationForm.setSalary(map.get("salary"));
+
+		// Bug: Resume upload section is not marked as mandatory field.
+		// automationForm.clickSubmitButton();
+		// Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getResume()),
+		// "Please select a file.");
+		// automationForm.uploadResume();
+
 		automationForm.clickSubmitButton();
-		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getRelocateYes()), "Please select one of these options.");
-		automationForm.selectRelocateOption("yes");
+		Assert.assertEquals(automationForm.getFieldErrorMessage(automationForm.getRelocateElement()),
+				"Please select one of these options.");
+		automationForm.selectRelocateOption(map.get("relocate"));
 		automationForm.clickSubmitButton();
-		}
-	
-	@Test(priority=3, description= "Submit the form after filling all details properly by using XPath only. ")
-	public void TestCase4() {
-		automationForm.fillCompleteForm();
+	}
+
+	@Test(priority = 3, description = "Submit the form after filling all details properly by using XPath only. ", dataProvider = "getData", dataProviderClass = ExcelUtil.class)
+	public void TestCase4(Map<String, String> map) {
+		automationForm.fillCompleteForm(map);
+		formFieldValues = automationForm.getAllFieldValues();
+		automationForm.getAllFieldValues().clear();
 		automationForm.clickSubmitButton();
+	}
+
+	@Test(priority = 4, dependsOnMethods = "TestCase4", description = "Verify DB entry after submitting the form using JDBC connection.")
+	public void TestCase5() throws SQLException {
+		ArrayList<String> dbEnteredValues = DatabaseConnector.executeSQLQuery_List("select * from automationForm");
+		Assert.assertTrue(formFieldValues.equals(dbEnteredValues),
+				"Entered form value is correctly entered in database");
 	}
 }
